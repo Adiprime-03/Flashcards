@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset = "utf-8"/>
+        <title>User Dashboard</title>
+        <link rel = "stylesheet" type = "text/css" href = "{{ url_for('static', filename = 'bootstrap/css/bootstrap.min.css') }}"/>
+        <script type = "text/javascript" src = "{{ url_for('static', filename = 'js/custom.js') }}"></script>
+    </head>
+    <body>
+        <div class = "container">
+            <div class = "jumbotron">
+                <h1 class = "display-4">Flashcards!<br></h1>
+            </div>
+
+            <div class = "row">
+                <div class = "col-md-8">
+                    <p>
+                        <h2 class = "display-4">Card:</h2>
+                    </p>
+                    <div class = "row">
+                        <div class = "col-md-3"></div>
+                        <div class = "col-md-6" align = "center">
+                            <table class = "table table-active">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                    </tr>
+                                    <tr>
+                                        <th></th>
+                                    </tr>
+                                    <tr>
+                                        <th></th>
+                                    </tr>
+                                    <tr>
+                                        <th style="text-align:center; font-size:40px;" scope = "col">
+                                            {% if l!= 0 %}
+                                                {{finalcards[n-1]["front"]}}
+                                            {% else %}
+                                                No card in Deck!
+                                            {% endif %}
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th></th>
+                                    </tr>
+                                    <tr>
+                                        <th></th>
+                                    </tr>
+                                    <tr>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                            </table>
+                            
+                        </div>
+                        <div class = "col-md-3"></div>
+                    </div>
+                    {% if l!= 0 %}
+                    <div class = "row">
+                        {% if n == 1 %}
+                            <div class = "col-md-1"></div>
+                        {% else %}
+                            <div class = "col-md-1"><a href = '/question/{{user[0]["username"]}}/{{lang}}?n={{n-1}}'>prev</a></div>
+                        {% endif %}
+
+                            <div class = "col-md-3">
+                                <button class = "mark1" id= mark1 data-userid = "{{user[0]['user_id']}}" data-cardid = "{{finalcards[n-1]['card_id']}}" data-mark = "0" onclick="myFunction1()">Don't Know</button>
+                                <p id = "m1"></p>
+                            </div>
+                            <div class = "col-md-3">
+                                <button class = "mark2" id = "mark2"  data-userid = "{{user[0]['user_id']}}" data-cardid = "{{finalcards[n-1]['card_id']}}" data-mark = "1" onclick="myFunction2()">Kind Of</button>
+                                <p id = "m2"></p>
+                            </div>
+                            <div class = "col-md-3">
+                                <button class = "mark3" id = "mark3"  data-userid = "{{user[0]['user_id']}}" data-cardid = "{{finalcards[n-1]['card_id']}}" data-mark = "2" onclick="myFunction3()">100% sure</button>
+                                <p id = "m3"></p>
+                            </div>                      
+                        
+                        {% if n == l %}
+                            <div class = "col-md-1"><a href = '/dashboard/{{user[0]["username"]}}' data-userid = "{{user[0]['user_id']}}" data-cardid = "{{finalcards[n-1]['card_id']}}" data-mark = "-1" id = "next" onclick="clickfunction()">Finish</a></div>
+                        {% else %}
+                            <div class = "col-md-1"><a href = '/question/{{user[0]["username"]}}/{{lang}}?n={{n+1}}' data-userid = "{{user[0]['user_id']}}" data-cardid = "{{finalcards[n-1]['card_id']}}" data-mark = "-1" id = "next" onclick="clickfunction()">Next</a></div>
+                        {% endif %}
+                    </div>
+                    <br/><br/>
+                    <p>
+                        <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                            Show Answer
+                        </button>
+                    </p>
+                    <div class = "row" class="collapse" id="collapseExample">
+                        <div class = "row">
+                        <div class = "col-md-6" align = "center">
+                            <table class = "table table-active">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                    </tr>
+                                    <tr>
+                                        <th></th>
+                                    </tr>
+                                    <tr>
+                                        <th></th>
+                                    </tr>
+                                    <tr>
+                                        <th style="text-align:center; font-size:40px;" scope = "col">
+                                            {{finalcards[n-1]["back"]}}
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th></th>
+                                    </tr>
+                                    <tr>
+                                        <th></th>
+                                    </tr>
+                                    <tr>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                            </table>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+                <div class = "col-md-4">
+                    Username : {{user[0]["username"]}}
+                    <br>
+                    User ID : {{user[0]["user_id"]}}
+                    <br>
+                    <a href = "/login">Log Out</a><br/>
+                    <a href = '/dashboard/{{user[0]["username"]}}'>Dashboard</a>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script type = "text/javascript">
+        myFuction1()
+        myFuction2()
+        myFuction3()
+        clickfunction()
+    </script>
+</html>

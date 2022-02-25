@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset = "utf-8"/>
+        <title>User Dashboard</title>
+        <link rel = "stylesheet" type = "text/css" href = "{{ url_for('static', filename = 'bootstrap/css/bootstrap.min.css') }}"/>
+        <script type = "text/javascript" src = "{{ url_for('static', filename = 'js/custom.js') }}"></script>
+    </head>
+    <body>
+        <div class = "container">
+            <div class = "jumbotron">
+                <h1 class = "display-4">Welcome back!<br>Dashboard</h1>
+            </div>
+
+            <div class = "row">
+                <div class = "col-md-8">
+                    <p>
+                        <h2 class = "display-4">Decks:</h2>
+                    </p>
+                    {% set i = namespace(value = 0) %}
+                    {% for deck in decks %}
+                    <div>
+                        <p>
+                            <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample{{i.value}}" aria-expanded="false" aria-controls="collapseExample">
+                                {{deck["language"]}}
+                            </button>
+                        </p>
+                        <div class = "row" class="collapse" id="collapseExample{{i.value}}">
+                            <div class = "col-md-8">    
+                                {% if(arg==0) %}
+                                    Score : 0<br/>
+                                    Last time reviewed cards : Never
+                                {% else %}
+                                    {% set Score = namespace(value=0) %}
+                                    {% set count = namespace(value=0) %}
+                                    {% set ftime = namespace(value="00/01/10 00:00:00") %}
+                                    {% for d in user[0]["donecards"] %}
+                                        {% if d["language"]==deck["language"] %}
+                                            {% for p in progress %}
+                                                {% if p["card_id"]==d["card_id"] %}
+                                                    {% set ftime.value = time(ftime, p["time"]) %}
+                                                    {% set Score.value = Score.value + p["marks"] %}
+                                                    {% set count.value = count.value + 1 %}
+                                                {% endif %}
+                                            {% endfor %}
+                                        {% endif %}
+                                    {% endfor %}
+                                    {% if count.value == 0 %}
+                                        Score : 0<br/>
+                                        Last time reviewed cards : Never
+                                    {% else %}
+                                        {% set Score = Score.value/count.value %}
+                                    
+                                        Score : {{floatify(Score)}}<br>
+                                        Last time reviewed cards : {{ftime.value}}
+
+                                    {% endif %}
+                                {% endif %}                            
+                            </div>
+                            <div class = "col-md-4">
+                                <a class="btn btn-warning" href = "/question/{{user[0]['username']}}/{{deck['language']}}?n=1" role="button">View Cards</a>
+                            </div>
+                          </div>
+                    </div>
+                    {% set i.value = i.value + 1 %}
+                    {% endfor %}
+                    <div class = "row">
+                        
+                    </div>
+                </div>
+                <div class = "col-md-4">
+                    Username : {{user[0]["username"]}}
+                    <br>
+                    User ID : {{user[0]["user_id"]}}
+                    <br>
+                    <a href = "/logout/{{user[0]['user_id']}}?next=login">Log Out</a>
+                    <br/>
+                    <a href = "/logout/{{user[0]['user_id']}}?next=view">View decks</a>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

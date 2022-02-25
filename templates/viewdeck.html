@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset = "utf-8"/>
+        <title>User Dashboard</title>
+        <link rel = "stylesheet" type = "text/css" href = "{{ url_for('static', filename = 'bootstrap/css/bootstrap.min.css') }}"/>
+        <script type = "text/javascript" src = "{{ url_for('static', filename = 'js/custom.js') }}"></script>
+    </head>
+    <body>
+        <div class = "container">
+            <div class = "jumbotron">
+                <h1 class = "display-4">View Decks<br></h1>
+            </div>
+
+            <div class = "row">
+                <div class = "col-md-8">
+                    <p>
+                        <h2 class = "display-4">Decks:</h2>
+                    </p>
+                    
+                    {% for deck in decks %}
+                    {% set i = namespace(value = deck['Did']) %}
+                    <div>
+                        <p>
+                            <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample{{i.value}}" aria-expanded="false" aria-controls="collapseExample">
+                                {{deck["language"]}}
+                            </button>
+                        </p>
+                        <div class = "row" class="collapse" id="collapseExample{{i.value}}">
+                            <div class = "col-md-6">
+                                <table class = "table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Card Id</th>
+                                            <th>Language</th>
+                                            <th>Front</th>
+                                            <th>Back</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for card in cards %}
+                                        {% if card['language'] == deck['language'] %}
+                                        <tr>
+                                            <td>{{card['card_id']}}</td>
+                                            <td>{{card['language']}}</td>
+                                            <td>{{card['front']}}</td>
+                                            <td>{{card['back']}}</td>
+                                        </tr>
+                                        {% endif %}
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class = "col-md-6">
+                                <a class="btn btn-warning" href = "/addtodeck/{{deck['language']}}" role="button">Add cards to deck</a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class = "col-md-4">
+                    <a href = "/login">Login</a>
+                    <br/>
+                    <a href = "/adddeck">Add Decks</a>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

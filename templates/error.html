@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset = "utf-8"/>
+		<title>Invalid Username</title>
+		<link rel = "stylesheet" type = "text/css" href = "{{ url_for('static', filename = 'bootstrap/css/bootstrap.min.css') }}"/>
+        <script type = "text/javascript" src = "{{ url_for('static', filename = 'js/custom.js') }}"></script>
+	</head>
+	<body>
+		Invalid Username!!
+        <br>
+        CLick here to Sign Up:
+        <form action = "/signup"><input type = "submit" value = "Sign Up"/></form>
+    </body>
+</html>

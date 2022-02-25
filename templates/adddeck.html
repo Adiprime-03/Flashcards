@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset = "utf-8"/>
+        <title>User Dashboard</title>
+        <link rel = "stylesheet" type = "text/css" href = "{{ url_for('static', filename = 'bootstrap/css/bootstrap.min.css') }}"/>
+        <script type = "text/javascript" src = "{{ url_for('static', filename = 'js/custom.js') }}"></script>
+    </head>
+    <body>
+        <div class = "container">
+            <div class = "jumbotron">
+                <h1 class = "display-4">Add a deck<br></h1>
+            </div>
+
+            <div class = "row">
+                <div class = "col-md-8">
+                    <form method = "POST">
+                        Enter language:  <input type = "text" name = "LANGUAGE" required/><br/>
+                        {{err}}<br/>
+                        <input type = "submit" value = "Submit" name = "go">
+                    </form>
+                </div>
+            </div>
+            <div class = "col-md-4">
+                <a href = "/login">Login Page</a>
+            </div>
+        </div>
+    </body>
+</html>

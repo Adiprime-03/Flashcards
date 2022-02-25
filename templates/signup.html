@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset = "utf-8"/>
+		<title>Sign Up</title>
+        <h1>Create a user id by entering a username</h1>
+		<link rel = "stylesheet" type = "text/css" href = "{{ url_for('static', filename = 'bootstrap/css/bootstrap.min.css') }}"/>
+        <script type = "text/javascript" src = "{{ url_for('static', filename = 'js/custom.js') }}"></script>
+	</head>
+	<body>
+		<form method = "POST">
+			Enter username:
+			<input type = "text" name = "user_name" required/><br/>
+            {{err}}
+            <br/>
+			<input type = "submit" value = "Sign Up" name = "go">
+		</form>
+	</body>
+</html>
